@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FacebookSignIn</string>
+    <string name="facebook_app_id">1360791622642193</string>
+    <string name="facebook_client_token">b362c294051b6303f18bfed3142202c4</string>
+</resources>
