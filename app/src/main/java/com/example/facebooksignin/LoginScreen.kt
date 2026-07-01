@@ -1,6 +1,7 @@
 package com.example.facebooksignin
 
 import android.app.Activity
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,25 +30,8 @@ fun LoginScreen(
     viewModel: LoginViewModel,
     navController: NavHostController
 ) {
-    val context = LocalContext.current
-    val activity = context as Activity
+    val activity = LocalContext.current as ComponentActivity
     val loginState by viewModel.loginState.collectAsState()
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                // Browser se back aaye aur login complete nahi hua
-                if (loginState is LoginState.Loading) {
-                    viewModel.resetState()
-                }
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -55,6 +39,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Button(onClick = {
+            // Facebook login flow start
                 viewModel.login(activity)
             }
         ) {

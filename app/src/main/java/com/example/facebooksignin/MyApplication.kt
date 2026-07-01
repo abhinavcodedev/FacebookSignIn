@@ -10,8 +10,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        FacebookSdk.sdkInitialize(applicationContext)
+        // App open analytics events ke liye
         AppEventsLogger.activateApp(this)
     }
 }

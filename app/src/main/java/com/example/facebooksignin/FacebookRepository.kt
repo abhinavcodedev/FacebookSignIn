@@ -3,6 +3,7 @@ package com.example.facebooksignin
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.ComponentActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
@@ -58,23 +59,17 @@ class FacebookRepository {
         )
 
     }
-    fun callbackManager() = callbackManager
     suspend fun login(
-        activity: Activity
+        activity: ComponentActivity
     ): Result<FacebookUser> {
         return suspendCancellableCoroutine {
             loginContinuation = it
-/*             Facebook Login SDK start hota hai yahin se.
- SDK internally ye steps follow karta hai:
- 1. Device me Facebook app installed hai?
-      |-- YES -> Facebook app launch karne ki koshish karega.
-      |-- NO  -> Browser / Custom Tab / WebView login open karega.
- 2. Login successful hone ke baad callback
-    onSuccess(), onCancel(), onError() me return aata hai.
- 3. onSuccess() ke baad hum Graph API se
-    name, email aur profile picture fetch karte hain.*/
+            // Facebook App available hogi to app open hogi,
+            // warna browser automatically open ho jayega.
+            // Result direct callbackManager ko milega.
             loginManager.logInWithReadPermissions(
                 activity,
+                callbackManager,
                 listOf(
                     "public_profile",
                     "email"
@@ -113,4 +108,10 @@ class FacebookRepository {
 
     }
     fun logout() { loginManager.logOut() }
+
+    // Check karta hai user pehle se login hai ya nahi
+    fun isLoggedIn(): Boolean {
+        val accessToken = AccessToken.getCurrentAccessToken()
+        return accessToken != null && !accessToken.isExpired
+    }
 }

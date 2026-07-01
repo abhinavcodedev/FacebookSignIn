@@ -15,10 +15,14 @@ import com.example.facebooksignin.LoginViewModel
 fun AppNavigation() {
     val navController = rememberNavController()
     val loginViewModel: LoginViewModel = viewModel()
-
+    val startDestination = if (loginViewModel.isLoggedIn()) {
+            "home"
+        } else {
+            "login"
+        }
     NavHost(
         navController = navController,
-        startDestination = "login"
+        startDestination = startDestination
     ) {
 
         composable("login") {
