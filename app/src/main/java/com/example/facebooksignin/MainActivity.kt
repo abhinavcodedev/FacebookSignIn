@@ -18,9 +18,11 @@ import android.os.Build
 import android.util.Base64
 import android.util.Log
 import com.example.facebooksignin.navigation.AppNavigation
+import dagger.hilt.android.AndroidEntryPoint
 import java.security.MessageDigest
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

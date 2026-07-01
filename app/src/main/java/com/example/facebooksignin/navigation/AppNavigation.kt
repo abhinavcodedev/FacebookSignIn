@@ -27,15 +27,13 @@ fun AppNavigation() {
 
         composable("login") {
             LoginScreen(
-                navController = navController,
-                viewModel = loginViewModel
+                navController = navController
             )
         }
 
         composable("home") {
             HomeScreen(
-                navController = navController,
-                viewModel = loginViewModel
+                navController = navController
             )
 
         }
